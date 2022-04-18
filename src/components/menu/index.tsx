@@ -12,7 +12,7 @@ export default class Menu extends React.Component<{}> {
         <img src={Logo} className={styles.logo} />
         <ul>
           <li>
-            <a href="/home">
+            <a href="/">
               Wiseproov <FontAwesomeIcon icon={faHome} />
             </a>
           </li>
