@@ -3,31 +3,34 @@ import styles from "./menu.module.css";
 import Logo from "../../assets/imgs/nurmoja_net_ee.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFile, faHome, faTable } from "@fortawesome/free-solid-svg-icons";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 
 export default class Menu extends React.Component<{}> {
   render() {
     return (
+      <Router>
       <menu className="menu-visible">
         <img src={Logo} className={styles.logo} />
         <ul>
           <li>
-            <a href="/">
+            <Link to="/">
               Wiseproov <FontAwesomeIcon icon={faHome} />
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/table">
+            <Link to="/table">
               Tabel <FontAwesomeIcon icon={faTable} />
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/article">
+            <Link to="/article">
               Artikkel <FontAwesomeIcon icon={faFile} />
-            </a>
+            </Link>
           </li>
         </ul>
       </menu>
+      </Router>
     );
   }
 }

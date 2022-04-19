@@ -1,26 +1,34 @@
-import React from "react";
+import React, { lazy } from "react";
 import "./content.module.css";
 import { RouterOutlet } from "react-router-outlet";
 import Home from "../home";
 import Table from "./table";
 import Article from "./article";
-
-const routes = [
+ const routes = [
     {
-        path: '',
+        path: '/',
         component: Home,
+        exact: true,
     },
     {
         path: '/table',
-        component: Table
+        component: Table,
     },
     {
         path: '/article',
-        component: Article
+        component: Article,
+        routes: [
+            {
+                path: '/:id',
+                component: Article,
+            }
+        ]
     }
 ];
 
-function Content () {
+class Content extends React.Component<{}> {
+
+render () {
     return (
         <div id="maincontent" className="page">
             <div className="inline">
@@ -29,5 +37,8 @@ function Content () {
         </div>
     )
 }
+   
+}
+
 
 export default Content;
