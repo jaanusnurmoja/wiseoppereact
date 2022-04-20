@@ -1,20 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Axios } from "axios";
 import styles from "./content.module.css";
 
 const ax = new Axios();
-getData();
+
 //ax.get("https://midaiganes.irw.ee/api/list/66db6ed7");
-async function getData() {
-  const response = await ax.get("https://midaiganes.irw.ee/api/list/66db6ed7");
-  console.log(response.statusText);
-}
+//   const response = ax.get("https://midaiganes.irw.ee/api/list/66db6ed7");
+//   console.log(response);
+
 class Article extends React.Component<{}> {
+
   render() {
+    const article = 
+   fetch("https://midaiganes.irw.ee/api/list/66db6ed7")
+    .then(response => response.json());
+    console.log(article);
+    
     return (
       <div>
         <h1> Artikli pealkiri</h1>
-        <h2>{getData().} Perekonnanimi</h2>
+        <h2> Perekonnanimi</h2>
         <div className={styles.intro}>
           <p>
             Mattis leo at aliquam lorem malesuada dictumst viverra, est blandit
@@ -116,3 +121,4 @@ class Article extends React.Component<{}> {
 }
 
 export default Article;
+
