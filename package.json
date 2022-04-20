@@ -19,6 +19,7 @@
     "generate-react-cli": "^7.1.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-query": "^3.35.0",
     "react-router": "^6.3.0",
     "react-router-outlet": "^0.2.4",
     "react-scripts": "5.0.1",

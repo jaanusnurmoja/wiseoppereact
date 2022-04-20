@@ -1,25 +1,24 @@
-import React, { useEffect } from "react";
-import { Axios } from "axios";
+import React from "react";
 import styles from "./content.module.css";
-
-const ax = new Axios();
 
 //ax.get("https://midaiganes.irw.ee/api/list/66db6ed7");
 //   const response = ax.get("https://midaiganes.irw.ee/api/list/66db6ed7");
 //   console.log(response);
-
+/* let data: any;
+fetch("https://midaiganes.irw.ee/api/list/66db6ed7")
+  .then((response) => response.json())
+  .then((d) => {
+    if (d.id) {
+      data = d;
+    }
+  });
+ */
 class Article extends React.Component<{}> {
-
   render() {
-    const article = 
-   fetch("https://midaiganes.irw.ee/api/list/66db6ed7")
-    .then(response => response.json());
-    console.log(article);
-    
     return (
       <div>
-        <h1> Artikli pealkiri</h1>
-        <h2> Perekonnanimi</h2>
+        <h1> pealkiri </h1>
+        <h2> Autori nimi</h2>
         <div className={styles.intro}>
           <p>
             Mattis leo at aliquam lorem malesuada dictumst viverra, est blandit
@@ -121,4 +120,3 @@ class Article extends React.Component<{}> {
 }
 
 export default Article;
-
