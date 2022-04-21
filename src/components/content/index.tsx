@@ -26,9 +26,8 @@ import Article from "./article";
     }
 ];
 
-class Content extends React.Component<{}> {
+export default function Content () {
 
-render () {
     return (
         <div id="maincontent" className="page">
             <div className="inline">
@@ -36,9 +35,5 @@ render () {
             </div>
         </div>
     )
-}
    
 }
-
-
-export default Content;
