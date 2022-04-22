@@ -1,3 +1,4 @@
+import dataList from "./table";
 const baseUrl = "https://midaiganes.irw.ee/api/list/";
 const itemsPerPage = 10;
 const queryParams = { limit: 500 };
@@ -11,7 +12,7 @@ exports.getAllItems = async (err?: any) => {
     return err;
   }
   console.log(result);
-  return await result.list;
+  new dataList(result.list);
 };
 
 export default function DataSource() {

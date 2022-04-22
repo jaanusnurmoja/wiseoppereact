@@ -4,7 +4,11 @@ import { ResultProps } from "./resultProps";
 import DataSource from "./data";
 
 const allItems = DataSource().getAllItems();
-console.log("table", allItems);
+
+function dataList(dataList?:any[]) {
+  return dataList;
+}
+console.log("table", dataList());
 
 class Table extends React.Component<{}> {
   render() {
