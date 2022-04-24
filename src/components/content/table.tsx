@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { Component } from "react";
 import styles from "./content.module.css";
 import { ResultProps } from "./resultProps";
-import DataSource from "./data";
+//import "../../mainData";
+//import getData from "../../globals";
+import DataModule from "./data.module";
 
-const allItems = DataSource().getAllItems();
-
-function dataList(dataList?:any[]) {
-  return dataList;
-}
-console.log("table", dataList());
-
-class Table extends React.Component<{}> {
+class Table extends Component {
   render() {
-    return "Siia tuleb tabel";
+    return <DataModule />;
   }
 }
 

@@ -3,7 +3,8 @@ import "./App.css";
 import Header from "./components/header";
 import Menu from "./components/menu";
 import Content from "./components/content";
-import Home from "./components/home";
+//import Home from "./components/home";
+//import "./mainData";
 
 function App() {
   return (

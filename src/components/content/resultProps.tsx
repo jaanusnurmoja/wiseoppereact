@@ -7,6 +7,7 @@ export interface ResultProps {
   author: string;
   sex: string;
   personal_code: number;
+  birthdate: string;
   phone: string;
   date: number;
   image: any;

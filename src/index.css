@@ -15,6 +15,7 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -141,7 +142,7 @@ body {
   --highlightColor: #ffc107;
   --textColor: #3a3d57;
   --alternateTextColor: #fff;
-  --secondaryColor: #ff57a2;
+  --secondaryColor: #57a8ff;
   --backgroundColor: #3a3d57;
   --linkHoverColor: #d99f03;
   --blockColor: #efefef;
