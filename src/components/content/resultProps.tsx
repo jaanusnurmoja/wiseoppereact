@@ -14,6 +14,7 @@ export interface ResultProps {
   image: any;
   images: any[];
   intro: string;
+  preview: string;
   body: string;
   tags: string[];
   boolean: boolean;
