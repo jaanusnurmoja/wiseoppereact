@@ -185,7 +185,7 @@ export function navigate(
   props.pageIndex = pgIndex;
   props.start = newStart;
   props.next = newNext;
-  let inimesteLoend = localStorage.getItem('inimesed');
+  let inimesteLoend = localStorage.getItem("inimesed");
   console.log(inimesteLoend);
   return setSliceInimesed(inimesteLoend, props.start, props.next);
 }
