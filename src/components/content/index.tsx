@@ -20,10 +20,11 @@ import Article from "./article";
         routes: [
             {
                 path: '/:id',
-                component: Article,
-            }
+                component: Article
+            },
+
         ]
-    }
+    },
 ];
 
 export default function Content () {

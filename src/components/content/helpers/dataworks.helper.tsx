@@ -1,5 +1,3 @@
-import MainData from "../../../mainData";
-
 import { Component } from "react";
 import {
   faSort,
@@ -7,7 +5,6 @@ import {
   faSortDesc,
 } from "@fortawesome/free-solid-svg-icons";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
-MainData();
 const pageIndex = 0;
 const pageTotal = 0;
 const start = 0;

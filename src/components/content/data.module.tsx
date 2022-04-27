@@ -10,7 +10,6 @@ import DataList, {
   setSliceInimesed,
   sortCompare,
   navigate,
-  setNupula,
   nupula,
   nupulaKlass,
 } from "./helpers/dataWorks.helper";
@@ -22,10 +21,7 @@ import {
   faSortAsc,
   faSortDesc,
 } from "@fortawesome/free-solid-svg-icons";
-import TruncateMarkup from "react-truncate-markup";
-import LinesEllipsis from "react-lines-ellipsis";
-import { stripHtml } from "string-strip-html";
-const allDataUrl = "https://midaiganes.irw.ee/api/list";
+const allDataUrl = "https://midaiganes.irw.ee/api/list/?limit=500";
 const works = new DataList([]);
 export default function DataModule() {
   const [result, setResult] = useState<ResultProps[]>([]);
@@ -60,59 +56,6 @@ export default function DataModule() {
           <th id="phone">Telefon</th>
         </tr>
       </thead>
-      <tfoot>
-        <tr>
-          <td colSpan={5} className="buttonWrapper">
-            <div
-              role="group"
-              className="btn-transparent btn-xxl nav nav-fill"
-              aria-label="Navigate"
-              style={{ width: "100%" }}
-            >
-              <button
-                className="btn btn-light btn-xxl"
-                onClick={navigate("esimene", 0, 0, getProperties().limit)}
-              >
-                1
-              </button>
-              <button
-                className="btn btn-dark btn-xxl"
-                onClick={navigate("eelmine", getProperties().pageIndex)}
-                aria-label="Navigate to previous page"
-                className="disabled button__transparent"
-              >
-                <FontAwesomeIcon icon={faChevronLeft} />
-              </button>
-              {getProperties().offsets}.map((o)
-              {nupula(o)(
-                <button
-                  id={offset.pageIndex}
-                  className="nav-item btn btn-xxl"
-                  classNames={nupulaKlass(o)}
-                  onClick={navigate("praegune", o.pageIndex, o.value, o.next)}
-                >
-                  {o.page}
-                </button>
-              )}
-              <button
-                className="btn btn-dark btn-xxl"
-                onClick={navigate("järgmine", pageIndex)}
-                aria-label="Navigate to next page"
-                variant="transparent"
-                class="button__transparent"
-              >
-                <FontAwesomeIcon icon={faChevronRight} />
-              </button>
-              <button
-                className="btn btn-light btn-xxl"
-                onClick={navigate("viimane", lastPageIndex)}
-              >
-                {pageTotal}
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tfoot>
 
       <tbody key="rows">
         {result.map((value) => {
