@@ -6,7 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 const pageIndex = 0;
-const pageTotal = 0;
+const pageTotal = 50;
 const start = 0;
 const next = 10;
 const limit = 10;
@@ -19,11 +19,11 @@ export function setProperties(newProps: any) {
   props.pageIndex = pageIndex;
   props.pageTotal = pageTotal;
   props.limit = limit;
-  props.start = start;
-  props.next = start + limit;
+  props.start = 0;
+  props.next = props.start + limit;
   props.total = total;
-  props.offsets = offsets;
-  props.currentOffset = {};
+  props.currentOffset = {pageIndex: props.pageIndex, value: props.start, next: props.next};
+  props.offsets = [props.currentOffset,];
 
   for (let prop in newProps) {
     props[prop] = newProps[prop];
@@ -88,7 +88,10 @@ export function setSortToggleNameAndSort(
     none = true;
   }
 
-  if (sortableField === "default") sortNames.default = "sort";
+  if (sortableField === "default") {
+    sortNames.default = "sort";
+    none = true;
+  }
   if (sortableField === "birthdate") sortableField = "sortBd";
   console.log(sortableField);
 
@@ -100,11 +103,11 @@ export function setSortToggleNameAndSort(
   }
 
   if (none) {
-    loend = DataList;
+    loend = data;
   } else {
     loend = sortedData;
   }
-  setSliceInimesed(loend, start, next);
+  return getSliceInimesed(loend, props.start, props.next);
 }
 
 export function sortCompare(
@@ -187,10 +190,10 @@ export function navigate(
   props.next = newNext;
   let inimesteLoend = localStorage.getItem("inimesed");
   console.log(inimesteLoend);
-  return setSliceInimesed(inimesteLoend, props.start, props.next);
+  return getSliceInimesed(inimesteLoend, props.currentOffset.value, props.currentOffset.next);
 }
 
-export function setSliceInimesed(inimesed: any, start?: number, next?: number) {
+export function getSliceInimesed(inimesed: any, start?: number, next?: number) {
   if (typeof start === "undefined") start = 0;
   if (typeof next === "undefined") next = 10;
   return inimesed.slice(start, next);

@@ -7,7 +7,7 @@ import DataList, {
   getProperties,
   personalIdToSortableAndFormattedDate,
   setSortToggleNameAndSort,
-  setSliceInimesed,
+  getSliceInimesed,
   sortCompare,
   navigate,
   nupula,
@@ -23,6 +23,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 const allDataUrl = "https://midaiganes.irw.ee/api/list/?limit=500";
 const works = new DataList([]);
+const props = getProperties();
+setProperties(props);
+console.log(props);
 export default function DataModule() {
   const [result, setResult] = useState<ResultProps[]>([]);
   useEffect(() => {
@@ -31,12 +34,13 @@ export default function DataModule() {
         method: "GET",
       });
       const jsonData = await data.json();
-      setResult(works.dataWorks(jsonData.list));
+      console.log(faSort.iconName);
+      setResult(works.dataWorks(setSortToggleNameAndSort(jsonData.list, "default", faSortAsc.iconName)));
     };
 
     api();
-  }, []);
 
+  }, []);
   return (
     <table>
       <thead key="headings">
@@ -56,6 +60,66 @@ export default function DataModule() {
           <th id="phone">Telefon</th>
         </tr>
       </thead>
+      <tfoot>
+        <tr>
+          <td colSpan={5} className="buttonWrapper">
+            <div
+              role="group"
+              className="btn-transparent btn-xxl nav nav-fill"
+              aria-label="Navigate"
+              style={{ width: "100%" }}
+            >
+              <>
+              <button
+                role="button"
+                className="btn btn-light btn-xxl"
+                //onClick={navigate("esimene", 0, 0, getProperties().limit)}
+              >
+                1
+              </button>
+              <button
+                 role="button"
+                 className="btn btn-dark btn-xxl button__transparent"
+                //onClick={navigate("eelmine", getProperties().pageIndex)}
+                aria-label="Navigate to previous page"
+                //className="disabled"
+              >
+                <FontAwesomeIcon icon={faChevronLeft} />
+              </button>
+                {
+/*                  props.offsets.map((o) => (nupula({pageIndex: props.pageIndex, start: props.start, next: props.next}), 1),
+                  (
+                    <button
+                      id={o.pageIndex}
+                      className={"nav-item btn btn-xxl " + nupulaKlass(o)}
+                      onClick={navigate("praegune", o.pageIndex, o.value, o.next)}
+                    >
+                      {o.page}
+                    </button>
+                  )
+                )
+ */                 }
+                <button
+                className="btn btn-dark btn-xxl button__transparent"
+                role="button"
+                //onClick={navigate("järgmine", getProperties().pageIndex)}
+                aria-label="Navigate to next page"
+                >
+                <FontAwesomeIcon icon={faChevronRight} />
+              </button>
+              <button
+                  role="button"
+                  className="btn btn-light btn-xxl"
+                //onClick={navigate("viimane", getProperties().lastPageIndex)}
+              >
+                {props.pageTotal}
+              </button>
+              </>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+
 
       <tbody key="rows">
         {result.map((value) => {
