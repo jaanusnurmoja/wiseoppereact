@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, useState } from "react";
 import {
   faSort,
   faSortAsc,
@@ -44,7 +44,7 @@ export default class DataList extends Component {
       d.birthdate = synna.formatted;
       d.phone = formatPhoneNumberIntl(d.phone);
     }
-    return data;
+    return setSliceInimesed(data);
   };
 }
 export function personalIdToSortableAndFormattedDate(personalId: any): any {
@@ -125,6 +125,12 @@ export function sortCompare(
 export function setCurrentOffset(offset: any) {
   props.currentOffset = offset;
 }
+
+const [isActive, setActive] = useState(false);
+
+const toggleClass = () => {
+  setActive(!isActive);
+};
 
 export function nupula(offset?: any) {
   if (!offset) offset = props.currentOffset;

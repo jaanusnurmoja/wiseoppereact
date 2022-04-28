@@ -41,16 +41,16 @@ export default function DataModule() {
     <table>
       <thead key="headings">
         <tr key="result">
-          <th id="firstname">
+          <th id="firstname" role="button">
             Eesnimi <FontAwesomeIcon icon={faSort} />
           </th>
-          <th id="surname">
+          <th id="surname" role="button">
             Perekonnanimi <FontAwesomeIcon icon={faSort} />
           </th>
-          <th id="sex">
+          <th id="sex" role="button">
             Sugu <FontAwesomeIcon icon={faSort} />
           </th>
-          <th id="birthdate">
+          <th id="birthdate" role="button">
             Sündinud <FontAwesomeIcon icon={faSort} />
           </th>
           <th id="phone">Telefon</th>
@@ -65,7 +65,7 @@ export default function DataModule() {
                 role="button"
                 id={value.id}
                 key={value.id}
-                className="clickable active"
+                className="clickable"
               >
                 <td>{value.firstname}</td>
                 <td>{value.surname}</td>
