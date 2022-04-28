@@ -87,7 +87,7 @@ export default function DataModule() {
                 <FontAwesomeIcon icon={faChevronLeft} />
               </button>
                 {
-/*                  props.offsets.map((o) => (nupula({pageIndex: props.pageIndex, start: props.start, next: props.next}), 1),
+/*                  props.offsets.map((o) => (nupula(o), 1),
                   (
                     <button
                       id={o.pageIndex}
