@@ -3,6 +3,7 @@ import {
   faSort,
   faSortAsc,
   faSortDesc,
+  IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 const pageIndex = 0;
@@ -16,18 +17,33 @@ const props: any = {};
 //const data = localStorage.getItem('inimesed');
 
 export function setProperties(newProps: any) {
-  props.pageIndex = pageIndex;
-  props.pageTotal = pageTotal;
+  props.pageIndex = 0;
+  props.pageTotal = Math.ceil(props.total/props.limit);
   props.limit = limit;
   props.start = 0;
   props.next = props.start + limit;
   props.total = total;
   props.currentOffset = {
     pageIndex: props.pageIndex,
+    page: props.pageIndex + 1,
     value: props.start,
     next: props.next,
   };
-  props.offsets = [props.currentOffset];
+  let offsets: {
+    pageIndex: number;
+    page: number;
+    value: number;
+    next: number;
+  }[] = [];
+
+  for (let i = 0; i < props.pageTotal; i++) {
+    let osValue = i * limit;
+    let next = osValue + limit;
+    offsets[i] = { pageIndex: i, page: i + 1, value: osValue, next: next };
+  }
+  props.offsets = offsets;
+  props.firstOffset = offsets[0];
+
 
   for (let prop in newProps) {
     props[prop] = newProps[prop];
@@ -66,8 +82,8 @@ export function personalIdToSortableAndFormattedDate(personalId: any): any {
 
 export function setSortToggleNameAndSort(
   data: any,
-  sortableField: any,
-  sortIcon?: any
+  sortableField: string,
+  sortIcon?: string
 ) {
   let loend = data;
   let sortNames: any = {};
@@ -79,21 +95,21 @@ export function setSortToggleNameAndSort(
   if (!sortIcon) {
     sn = faSort;
   }
-  if (sortIcon === faSort) {
-    sn = faSortAsc.iconName;
+  if (sortIcon === "sort") {
+    sn = "sort-up";
     asc = true;
   }
-  if (sortIcon === faSortAsc) {
-    sn = faSortDesc.iconName;
+  if (sortIcon === "sort-up") {
+    sn = "sort-down";
     desc = true;
   }
-  if (sortIcon === faSortDesc) {
-    sn = faSort.iconName;
+  if (sortIcon === "sort-down") {
+    sn = "sort";
     none = true;
   }
 
   if (sortableField === "default") {
-    sortNames.default = "sort";
+    //sortNames.default = "sort";
     none = true;
   }
   if (sortableField === "birthdate") sortableField = "sortBd";
@@ -111,7 +127,8 @@ export function setSortToggleNameAndSort(
   } else {
     loend = sortedData;
   }
-  return getSliceInimesed(loend, props.start, props.next);
+  //return getSliceInimesed(loend, props.start, props.next);
+  return loend;
 }
 
 export function sortCompare(
@@ -121,10 +138,10 @@ export function sortCompare(
   desc: boolean
 ): number {
   if (asc === true) {
-    return prop1 - prop2;
+    return prop1 < prop2 ? -1 : 1;
   }
   if (desc === true) {
-    return prop2 - prop1;
+    return prop1 > prop2 ? -1 : 1;
   }
   return 0;
 }
@@ -171,7 +188,7 @@ export function navigate(
   target: string,
   pgIndex?: any,
   newStart?: any,
-  newNext?: any
+  newNext?: any,
 ) {
   if (target === "eelmine" || target === "järgmine" || target === "viimane") {
     if (target === "eelmine") {
@@ -189,16 +206,21 @@ export function navigate(
     newStart = props.offsets[pageIndex].value;
     newNext = props.offsets[pageIndex].next;
   }
-  props.pageIndex = pgIndex;
-  props.start = newStart;
-  props.next = newNext;
-  let inimesteLoend = localStorage.getItem("inimesed");
-  console.log(inimesteLoend);
+  setProperties({
+    pageIndex: pgIndex,
+    start: newStart,
+    next: newNext
+  }
+  );
+//  console.log(inimesteLoend);
+/*   if (!inimesteLoend) return;
   return getSliceInimesed(
     inimesteLoend,
     props.currentOffset.value,
     props.currentOffset.next
   );
+ */
+return props;
 }
 
 export function getSliceInimesed(inimesed: any, start?: number, next?: number) {

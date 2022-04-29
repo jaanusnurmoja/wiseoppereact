@@ -30,7 +30,7 @@ console.log(props);
 
 export default function DataModule() {
   const [result, setResult] = useState<ResultProps[]>([]);
-  const [stats, setStats] = useState<ResultProps>();
+  const [stats, setStats] = useState();
   const [isActive, setActive] = useState(false);
   const [tr, setTr] = useState("");
   const [sortIcon, setSortIcon] = useState({ dir: faSort, col: "default" });
@@ -49,7 +49,8 @@ export default function DataModule() {
         )
       );
       setStats(jsonData.stats);
-      console.log("ikoon", sortIcon);
+      console.log("stats veel", stats);
+      setProperties({total: jsonData.stats.results});
     };
 
     api();
@@ -68,6 +69,7 @@ export default function DataModule() {
     setSortIcon(newSort);
   };
   return (
+    <div className="table-wrapper">
     <table>
       <thead key="headings">
         <tr key="result">
@@ -81,7 +83,7 @@ export default function DataModule() {
             onClick={() => {
               toggleSort("surname");
               setResult(
-                setSortToggleNameAndSort(result, "surname", sortIcon.dir)
+                setSortToggleNameAndSort(result, "surname", sortIcon.dir.iconName)
               );
             }}
           >
@@ -111,40 +113,42 @@ export default function DataModule() {
               <>
                 <button
                   className="btn btn-light btn-xxl"
-                  //onClick={navigate("esimene", 0, 0, getProperties().limit)}
+                  onClick={navigate("esimene", 0, 0, props.limit)}
                 >
                   1
                 </button>
                 <button
                   className="btn btn-dark btn-xxl button__transparent"
-                  //onClick={navigate("eelmine", getProperties().pageIndex)}
+                  onClick={navigate("eelmine", props.pageIndex)}
                   aria-label="Navigate to previous page"
                   //className="disabled"
                 >
                   <FontAwesomeIcon icon={faChevronLeft} />
                 </button>
-                {/*                  props.offsets.map((o) => (nupula(o), 1),
-                  (
+                {props.offsets.map((o:any) => {
+                  return nupula(o) === 1 ? 
+                  
                     <button
                       id={o.pageIndex}
                       className={"nav-item btn btn-xxl " + nupulaKlass(o)}
                       onClick={navigate("praegune", o.pageIndex, o.value, o.next)}
                     >
                       {o.page}
-                    </button>
-                  )
+                    </button> : <></>
+                  
+                }
                 )
- */}
+ }
                 <button
                   className="btn btn-dark btn-xxl button__transparent"
-                  //onClick={navigate("järgmine", getProperties().pageIndex)}
+                  onClick={navigate("järgmine", getProperties().pageIndex)}
                   aria-label="Navigate to next page"
                 >
                   <FontAwesomeIcon icon={faChevronRight} />
                 </button>
                 <button
                   className="btn btn-light btn-xxl"
-                  //onClick={navigate("viimane", getProperties().lastPageIndex)}
+                  onClick={navigate("viimane", getProperties().lastPageIndex)}
                 >
                   {props.pageTotal}
                 </button>
@@ -155,7 +159,7 @@ export default function DataModule() {
       </tfoot>
 
       <tbody key="rows">
-        {result.map((value) => {
+        {result.slice(props.start, props.next).map((value) => {
           return (
             <>
               <tr
@@ -208,5 +212,6 @@ export default function DataModule() {
         })}
       </tbody>
     </table>
+    </div>
   );
 }

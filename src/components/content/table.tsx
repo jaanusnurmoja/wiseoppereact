@@ -7,7 +7,9 @@ import DataModule from "./data.module";
 
 class Table extends Component {
   render() {
-    return <DataModule />;
+    return (
+    <DataModule />
+    );
   }
 }
 

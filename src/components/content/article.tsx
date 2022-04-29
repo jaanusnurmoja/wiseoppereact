@@ -37,7 +37,7 @@ export default function Article() {
     }
   });
   return (
-    <div className={styles.inline}>
+    <div>
       <h1>{result?.title}</h1>
       <h2>{result?.author}</h2>
       <div className={styles.intro}>
@@ -45,7 +45,7 @@ export default function Article() {
           ? parse(result.intro)
           : result?.intro}
       </div>
-      <img src={result?.image.small} alt={result?.image.alt} />
+      <img src={result?.image.medium} alt={result?.image.alt} />
       <div>
         {typeof result?.body === "string" ? parse(result.body) : result?.body}
       </div>

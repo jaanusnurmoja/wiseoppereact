@@ -1,5 +1,5 @@
 import React, { lazy } from "react";
-import "./content.module.css";
+import style from "./content.module.css";
 import { RouterOutlet } from "react-router-outlet";
 import Home from "../home";
 import Table from "./table";
@@ -28,7 +28,7 @@ const routes = [
 export default function Content() {
   return (
     <div id="maincontent" className="page">
-      <div className="inline">
+      <div className={style.inline}>
         <RouterOutlet routes={routes} />
       </div>
     </div>
