@@ -97,3 +97,7 @@ table .active+tr td {
   background: #fff !important;
   color: #333 !important;
 }
+
+.hidden {
+  display: none;
+}

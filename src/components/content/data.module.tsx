@@ -20,27 +20,53 @@ import {
   faSort,
   faSortAsc,
   faSortDesc,
+  IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 const allDataUrl = "https://midaiganes.irw.ee/api/list/?limit=500";
 const works = new DataList([]);
 const props = getProperties();
 setProperties(props);
 console.log(props);
+
 export default function DataModule() {
   const [result, setResult] = useState<ResultProps[]>([]);
+  const [stats, setStats] = useState<ResultProps>();
+  const [isActive, setActive] = useState(false);
+  const [tr, setTr] = useState("");
+  const [sortIcon, setSortIcon] = useState({ dir: faSort, col: "default" });
+  console.log("akiivn ", isActive);
+
   useEffect(() => {
     const api = async () => {
       const data = await fetch(allDataUrl, {
         method: "GET",
       });
       const jsonData = await data.json();
-      console.log(faSort.iconName);
-      setResult(works.dataWorks(setSortToggleNameAndSort(jsonData.list, "default", faSortAsc.iconName)));
+      setResult(
+        works.dataWorks(
+          jsonData.list
+          //setSortToggleNameAndSort(jsonData.list, "default", sortIcon.dir)
+        )
+      );
+      setStats(jsonData.stats);
+      console.log("ikoon", sortIcon);
     };
 
     api();
-
   }, []);
+  const toggleClass = (trId: string) => {
+    setActive(!isActive);
+    setTr(trId);
+  };
+
+  const toggleSort = (col: string) => {
+    const newSort = { dir: sortIcon.dir, col: col };
+    if (sortIcon.dir === faSort) newSort.dir = faSortAsc;
+    if (sortIcon.dir === faSortAsc) newSort.dir = faSortDesc;
+    if (sortIcon.dir === faSortDesc) newSort.dir = faSort;
+
+    setSortIcon(newSort);
+  };
   return (
     <table>
       <thead key="headings">
@@ -48,8 +74,21 @@ export default function DataModule() {
           <th id="firstname" role="button">
             Eesnimi <FontAwesomeIcon icon={faSort} />
           </th>
-          <th id="surname" role="button">
-            Perekonnanimi <FontAwesomeIcon icon={faSort} />
+          <th
+            id="surname"
+            key="surname"
+            role="button"
+            onClick={() => {
+              toggleSort("surname");
+              setResult(
+                setSortToggleNameAndSort(result, "surname", sortIcon.dir)
+              );
+            }}
+          >
+            Perekonnanimi
+            <FontAwesomeIcon
+              icon={sortIcon.col === "surname" ? sortIcon.dir : faSort}
+            />
           </th>
           <th id="sex" role="button">
             Sugu <FontAwesomeIcon icon={faSort} />
@@ -70,24 +109,21 @@ export default function DataModule() {
               style={{ width: "100%" }}
             >
               <>
-              <button
-                role="button"
-                className="btn btn-light btn-xxl"
-                //onClick={navigate("esimene", 0, 0, getProperties().limit)}
-              >
-                1
-              </button>
-              <button
-                 role="button"
-                 className="btn btn-dark btn-xxl button__transparent"
-                //onClick={navigate("eelmine", getProperties().pageIndex)}
-                aria-label="Navigate to previous page"
-                //className="disabled"
-              >
-                <FontAwesomeIcon icon={faChevronLeft} />
-              </button>
-                {
-/*                  props.offsets.map((o) => (nupula(o), 1),
+                <button
+                  className="btn btn-light btn-xxl"
+                  //onClick={navigate("esimene", 0, 0, getProperties().limit)}
+                >
+                  1
+                </button>
+                <button
+                  className="btn btn-dark btn-xxl button__transparent"
+                  //onClick={navigate("eelmine", getProperties().pageIndex)}
+                  aria-label="Navigate to previous page"
+                  //className="disabled"
+                >
+                  <FontAwesomeIcon icon={faChevronLeft} />
+                </button>
+                {/*                  props.offsets.map((o) => (nupula(o), 1),
                   (
                     <button
                       id={o.pageIndex}
@@ -98,28 +134,25 @@ export default function DataModule() {
                     </button>
                   )
                 )
- */                 }
+ */}
                 <button
-                className="btn btn-dark btn-xxl button__transparent"
-                role="button"
-                //onClick={navigate("järgmine", getProperties().pageIndex)}
-                aria-label="Navigate to next page"
+                  className="btn btn-dark btn-xxl button__transparent"
+                  //onClick={navigate("järgmine", getProperties().pageIndex)}
+                  aria-label="Navigate to next page"
                 >
-                <FontAwesomeIcon icon={faChevronRight} />
-              </button>
-              <button
-                  role="button"
+                  <FontAwesomeIcon icon={faChevronRight} />
+                </button>
+                <button
                   className="btn btn-light btn-xxl"
-                //onClick={navigate("viimane", getProperties().lastPageIndex)}
-              >
-                {props.pageTotal}
-              </button>
+                  //onClick={navigate("viimane", getProperties().lastPageIndex)}
+                >
+                  {props.pageTotal}
+                </button>
               </>
             </div>
           </td>
         </tr>
       </tfoot>
-
 
       <tbody key="rows">
         {result.map((value) => {
@@ -129,7 +162,8 @@ export default function DataModule() {
                 role="button"
                 id={value.id}
                 key={value.id}
-                className="clickable"
+                onClick={() => toggleClass(value.id)}
+                className={isActive && tr === value.id ? styles.active : ""}
               >
                 <td>{value.firstname}</td>
                 <td>{value.surname}</td>
@@ -137,7 +171,15 @@ export default function DataModule() {
                 <td>{value.birthdate}</td>
                 <td>{value.phone}</td>
               </tr>
-              <tr id={value.id + "_intro"} key={value.id + "_intro"}>
+              <tr
+                id={value.id + "_intro"}
+                key={value.id + "_intro"}
+                className={
+                  isActive && tr + "_intro" === value.id + "_intro"
+                    ? ""
+                    : styles.hidden
+                }
+              >
                 <td colSpan={5}>
                   <div className={styles.tab}>
                     <div

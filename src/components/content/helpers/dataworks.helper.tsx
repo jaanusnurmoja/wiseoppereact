@@ -22,8 +22,12 @@ export function setProperties(newProps: any) {
   props.start = 0;
   props.next = props.start + limit;
   props.total = total;
-  props.currentOffset = {pageIndex: props.pageIndex, value: props.start, next: props.next};
-  props.offsets = [props.currentOffset,];
+  props.currentOffset = {
+    pageIndex: props.pageIndex,
+    value: props.start,
+    next: props.next,
+  };
+  props.offsets = [props.currentOffset];
 
   for (let prop in newProps) {
     props[prop] = newProps[prop];
@@ -44,7 +48,7 @@ export default class DataList extends Component {
       d.birthdate = synna.formatted;
       d.phone = formatPhoneNumberIntl(d.phone);
     }
-    return setSliceInimesed(data);
+    return data;
   };
 }
 export function personalIdToSortableAndFormattedDate(personalId: any): any {
@@ -76,15 +80,15 @@ export function setSortToggleNameAndSort(
     sn = faSort;
   }
   if (sortIcon === faSort) {
-    sn = faSortAsc;
+    sn = faSortAsc.iconName;
     asc = true;
   }
   if (sortIcon === faSortAsc) {
-    sn = faSortDesc;
+    sn = faSortDesc.iconName;
     desc = true;
   }
   if (sortIcon === faSortDesc) {
-    sn = faSort;
+    sn = faSort.iconName;
     none = true;
   }
 
@@ -93,7 +97,7 @@ export function setSortToggleNameAndSort(
     none = true;
   }
   if (sortableField === "birthdate") sortableField = "sortBd";
-  console.log(sortableField);
+  console.log(sortableField, sn);
 
   if (sortableField.length > 0 && sortableField !== "default") {
     sortNames[sortableField] = sn;
@@ -128,12 +132,6 @@ export function sortCompare(
 export function setCurrentOffset(offset: any) {
   props.currentOffset = offset;
 }
-
-const [isActive, setActive] = useState(false);
-
-const toggleClass = () => {
-  setActive(!isActive);
-};
 
 export function nupula(offset?: any) {
   if (!offset) offset = props.currentOffset;
@@ -196,7 +194,11 @@ export function navigate(
   props.next = newNext;
   let inimesteLoend = localStorage.getItem("inimesed");
   console.log(inimesteLoend);
-  return getSliceInimesed(inimesteLoend, props.currentOffset.value, props.currentOffset.next);
+  return getSliceInimesed(
+    inimesteLoend,
+    props.currentOffset.value,
+    props.currentOffset.next
+  );
 }
 
 export function getSliceInimesed(inimesed: any, start?: number, next?: number) {
